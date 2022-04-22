@@ -130,7 +130,7 @@
             @if(isset($uruns)) 
             @foreach ($uruns as $don)
         <div class="col-4 text-center text-break my-5">
-          <img style="width: 150px; height: 150px;" src="/resources/pictures/Xiaomi/Xiaomi_Kulaklık1.jpg" alt="">
+          <img src="{{asset('/')}}{{$don->urunfoto}}" width="150px" height="150px" alt="ürünfotoğrafı">
             <p>{{$don['urunbilgisi']}}</p>
             <p>{{$don['urunfiyat']}}</p>
             <button class="btn btn-outline-dark">Sepete Ekle</button>

@@ -53,7 +53,7 @@
 
 
 <!-- Navbar Başlangıcı -->
-<div class="bg-image" style="position: relative; z-index: 1; height: 30vh; filter: grayscale(85%);  background-image: url(assets/pictures/banner.jpg)">
+<div>
     <div class="col-12" >
         <nav class="navbar navbar-expand-lg navbar-light bg-light" >
             <div class="container-fluid" >
@@ -87,43 +87,45 @@
 
 
 <!-- Kayıtları görüntülemek için tablo başlangıcı-->
-<div class="container  d-flex justify-content-evenly">
-    <div class="rounded rounded-3 col-8 my-5 ">
-        <h1 class="display-6 my-2"> Ürünler</h1>
+<div class="mt-5 d-flex justify-content-evenly ">
+    <div class="rounded rounded-3 col-8  ">
+        <p class="display-6 text-center">Mevcut Ürünler</p>
         <hr class="border border-1 border-dark">
 
-        <div class="col-12 d-flex">
+        <div class="col-12 d-flex ">
           <div class="col-6">
             <input class=" my-3 form-control" type="text" id="urunAra" onkeyup="urunArama()" placeholder="Ürün Ara">
           </div>
           <div class="col-6 d-flex justify-content-end">
             <div>
-              <button class="my-3 btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal">Ürün Ekle</button> 
+              <button class="mt-3 btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#myModal">Ürün Ekle</button> 
             </div>
           </div>
         </div>
 
         <div class="table-responsive-md overflow-auto rounded rounded-3">
-            <table id="urunTablosu" class="table table-light table-striped table-hover" >
-                <thead class="table-dark">
+            <table id="urunTablosu" class="table-bordered table table-light table-striped table-hover" >
+                <thead class=" table-dark">
                 <tr>
-                    <th>ID</th>
-                    <th>Adı</th>
-                    <th>Adeti</th>
-                    <th>Fiyatı</th>
-                    <th ></th>
+                    <th class="text-center ">ID</th>
+                    <th class="text-center ">Fotoğraf</th>
+                    <th class="text-start ">Adı</th>
+                    <th class="text-center ">Adeti</th>
+                    <th class="text-center ">Fiyatı</th>
+                    <th class="text-center ">Ürüneri Sil</th>
                 </tr>
                 </thead>
                 <tbody>
                   @if(isset($uruns)) 
                   @foreach ($uruns as $don)
                 <tr>
-                   <td>{{$don['id']}}</td>
-                    <td>{{$don['urunbilgisi']}}</td>
-                    <td>{{$don['urunadet']}}</td>
-                    <td>{{$don['urunfiyat']}}</td>
-                    <td class="d-flex justify-content-start">
-                      <a class="btn btn-dark" 
+                   <td class="text-center pt-4 "><b>{{$don['id']}}</b></td>
+                   <td class="text-center"><img src="{{asset('/')}}{{$don->urunfoto}}" width="60px" height="60px"> </td>
+                   <td class="text-start pt-4">{{$don['urunbilgisi']}}</td>
+                   <td class="text-center pt-4">{{$don['urunadet']}}</td>
+                   <td class="text-center pt-4">{{$don['urunfiyat']}}</td>
+                   <td class="text-center pt-3" class="ps-3 text-center" >
+                      <a class="btn btn-dark " 
                       style="text-decoration: none; color: rgb(255, 255, 255);" 
                       href={{url('sil').'/'.$don->id }}>Ürünü Sil</a>
                   </td>
@@ -153,12 +155,12 @@
 
 
       <div class="modal-body">
-        <form action="{{ url("/urunukaydet") }}" method="POST">
+        <form action="{{ url("/urunukaydet") }}" method="POST" enctype="multipart/form-data" >
           @csrf
           <div class="container d-flex justify-content-center">
             <div class="col-6">
               <label class="mt-3" for="foto">Ürün Fotoğrafı</label>
-              <div class=""><input class="form-control" name="urunEkleFoto" type="file" required></div>
+              <div class=""><input class="form-control" name="urunEkleFoto" type="file" accept="image/png, image/jpeg" required></div>
               
               <label class="mt-3" for="urunEkleFiyat">Ürün Fiyatı</label>
               <div class=""><input class="form-control" name="urunEkleFiyat"  type="text"></div>
@@ -188,7 +190,7 @@
 
 <!-- Footer Başlangıcı -->
 <footer class="text-center text-white mt-auto" style="background-color: #f1f1f1;">
-    <!-- Grid container -->
+   
     <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
       © 2022 Tüm Hakları Saklıdır
     </div>
@@ -196,7 +198,7 @@
 <!-- Footer Sonu -->
    
 
-<!--Ürün ve kullanıcı aramak için fonksiyonların başlangıcı-->
+<!--Ürün aramak için fonksiyon başlangıcı-->
 <script>
     function urunArama() {
       var input, filter, table, tr, td, i, txtValue;
@@ -217,26 +219,8 @@
       }
     }
 
-    function kullaniciArama() {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("kullaniciAra");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("kullaniciTablosu");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }       
-      }
-    }
 </script>
-<!--Ürün ve kullanıcı aramak için fonksiyonların sonu-->
+<!--Ürün aramak için fonksiyon sonu-->
 
 
 </body>

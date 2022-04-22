@@ -17,7 +17,13 @@ class uyeOl extends Controller
             $urun->urunbilgisi = $istek->urunEkleAciklama;
             $urun->urunadet = $istek->urunEkleAdet;
             $urun->urunfiyat = $istek->urunEkleFiyat;
-            $urun->urunfoto="uploads/indir.png";
+            $urun->urunfoto= "uploads/indir.png";
+            
+            if($istek->hasFile('urunEkleFoto')){
+                $fotografismi= time().'.'.$istek->urunEkleFoto->getClientOriginalName();
+                $istek->urunEkleFoto->move(public_path('uploads'), $fotografismi);
+                $urun->urunfoto='uploads/'.$fotografismi;
+            }
             $urun->save();
             return redirect()->back();
         }
