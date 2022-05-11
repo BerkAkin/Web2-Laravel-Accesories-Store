@@ -33,25 +33,41 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarToggler02">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                  <li class="nav-item me-5">
+                  <li class="nav-item me-5  my-auto">
                     <a class="nav-link" aria-current="page" href="/"><i class="fa fa-house"></i> Anasayfa</a>
                   </li>
-                  <li class="nav-item me-5">
+                  <li class="nav-link active mx-5 my-auto"><?php
+                    $user = Auth::user();
+                    echo"Hoş geldiniz! ". $user->name; 
+                    ?>
+                    <div><?php echo $user->email; ?></div>
+                  </li>
+                  <li class="nav-item me-5 my-auto">
                     <a class="nav-link active" aria-current="page" href="sepet"><i class="fa fa-basket-shopping"></i> Sepetim</a>
                   </li>
-                  <li class="nav-item me-1">
-                    <a class="nav-link " href="cikis"><i class="fa fa-right-from-bracket"></i> Çıkış Yap</a>
-                  </li>
+                  <li class="nav-item my-auto">
+                    <a class="nav-link" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                        {{ __('Çıkış Yap') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+            </li>
                 </ul>
               </div>
             </div>
           </nav>
-          <div class="container mt-4 d-flex justify-content-center">
-            <div class=" bg-light col-2 rounded text-center"><h6 class="small pt-2">Kullanıcı Adı Buraya</h6></div>
-          </div>
+          
         </div>
   </div>
 <!-- Navbar Sonu -->
+
+
+
+
 
 <!-- Sepetimdeki Ürünler Başlangıcı -->
 <div class="container mt-5 ">
@@ -59,19 +75,92 @@
   <hr class="border border-1 border-dark">
 </div>
 <div class="container my-1 ">
-  <div class="my-5 d-flex justify-content-start"> 
-    <div class="col-6 text-center mt-2">
-      <p id="sepetUrunBilgisi">Ürün Bilgisi Buraya Gelecek</p>
+  <?php foreach(Cart::content() as $row) :?>
+  <div class="s mt-2 d-flex justify-content-start"> 
+    <div class="col-6 text-start mt-1">
+      <p id="sepetUrunBilgisi"><td><?php echo $row->name; ?></td></p>
     </div>
-    <div class="col-2 text-start mt-2">
-      <p id="sepetUrunFiyati">Fiyat Bilgisi Buraya Gelecek</p>
+    <div class=" col-2 text-center mt-1">
+      <p id="sepetUrunFiyati"><?php echo $row->price; ?> TL</p>
     </div>
     <div class="col-4 d-flex justify-content-center">
-      <button class="btn-sm rounded-3 btn-dark h-75 mt-2" id="sepetUrunKaldir">Sepetten Kaldır</button>
+      <a class="btn btn-dark " 
+      style="text-decoration: none; color: rgb(255, 255, 255);" 
+      href={{url('sepettensil').'/'.$row->rowId }}>Sepetten Kaldır</a>
+    </div>
+  </div>
+  <?php endforeach;?>
+</div>
+<div class="container">
+  <div class="col-12 text-end my-5">
+    <?php echo"Kargo ücretleri ve KDV dahil ara toplam: ". Cart::subtotal(); ?><span> TL</span>
+    <a  data-bs-toggle="modal" data-bs-target="#siparisiver" class="btn btn-dark ms-2" 
+    style="text-decoration: none; color: rgb(255, 255, 255);">Sipariş Ver</a>
+  </div>
+  
+</div>
+
+<!-- Sepetimdeki Ürünler Sonu -->
+
+
+<!--Sipariş Vermek İçin Modal Başlangıcı-->
+
+<div class="modal fade" id="siparisiver">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="display-6 modal-title">Siparişi Tamamla</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+          @csrf
+          <div class="my-2 text-success container d-flex justify-content-center text-center">
+            <div class="col-12">
+              <?php echo"Kargo ücretleri ve KDV dahil ara toplam: ". Cart::subtotal();?><span> TL</span>
+          </div>
+          </div>
+          <div class="container d-flex justify-content-center">
+            <div class="col-6">
+              <label class="mt-3" for="siparisAdSoyad">Ad-Soyad</label>
+              <div class=""><input class="form-control" name="siparisAdSoyad"required></div>
+              <label class="mt-3" for="siparisTelNo">Telefon Numarası</label>
+              <div class=""><input class="form-control" name="siparisTelNo"required></div>
+              <label class="mt-3" for="siparisposta">E-posta</label>
+              <div class=""><input class="form-control" type="email" name="siparisposta"required></div>
+              <label class="mt-3" for="urunEkleFiyat">Adres Bilgisi</label>
+              <div class=""><textarea cols="10" rows="5"  style="resize:none" class="form-control" name="siparisAdres" type="text"></textarea></div>
+            </div>
+          </div>
+          <div class="modal-footer mt-4">
+            <button type="button" class="btn btn-outline-danger"  data-bs-dismiss="modal">İptal</button>
+            <button type="submit" class="btn btn-outline-success">Siparişi Tamamla</button>
+          </div>
+        </form>
+      </div>
+
+
+      <!-- Modal footer -->
+      
+
     </div>
   </div>
 </div>
-<!-- Sepetimdeki Ürünler Sonu -->
+<!--Sipariş Vermek İçin Modal Sonu-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <!-- Footer Başlangıcı -->
   <footer class="text-center text-white mt-auto" style="background-color: #f1f1f1;">
     <div class="container pt-4">
@@ -79,21 +168,21 @@
         <!-- Facebook -->
         <a
           class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#!"
+          href="https://www.facebook.com/" target="_blank"
           role="button"
           ><i class="fab fa-facebook-f"></i
         ></a>
         <!-- Twitter -->
         <a
           class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#!"
+          href="https://twitter.com/?lang=tr" target="_blank"
           role="button"
           ><i class="fab fa-twitter"></i
         ></a>
         <!-- Instagram -->
         <a
           class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#!"
+          href="https://www.instagram.com/?hl=tr" target="_blank"
           role="button"
           ><i class="fab fa-instagram"></i
         ></a>
@@ -102,7 +191,9 @@
     <!-- Grid container -->
     <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
       © 2022 Tüm Hakları Saklıdır
-    </div>
+        <div>
+          Şikayet, görüş, istek ve önerileriniz için <p><a href="mailto:dummymailadiresi@hotmail.com">BİZE ULAŞIN</a></p>
+        </div>
   </footer>
   <!-- Footer Sonu -->
    

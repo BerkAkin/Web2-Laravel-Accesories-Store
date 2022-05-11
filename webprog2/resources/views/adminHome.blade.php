@@ -12,7 +12,7 @@
         <script src="{{url('https://code.jquery.com/jquery-3.2.1.slim.min.js')}}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="{{url('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js')}}" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="{{url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')}}" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-       
+        <title>Admin</title>
         <!-- ScrollBar görüntüsü için ayar başlangıcı-->
         <style>
             /* width */
@@ -66,6 +66,12 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarToggler02">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                  <li class="nav-link active mx-5 my-auto"><?php
+                    $user = Auth::user();
+                    echo"Hoş geldiniz! ". $user->name; 
+                    ?>
+                    <div><?php echo $user->email; ?></div>
+                  </li>
                   <li class="nav-item me-1">
                     <a class="nav-link" href="{{ route('logout') }}"
                               onclick="event.preventDefault();
@@ -103,7 +109,7 @@
           </div>
         </div>
 
-        <div class="table-responsive-md overflow-auto rounded rounded-3">
+        <div style="height: 300px" class="table-responsive-md overflow-scroll rounded rounded-3">
             <table id="urunTablosu" class="table-bordered table table-light table-striped table-hover" >
                 <thead class=" table-dark">
                 <tr>
@@ -140,6 +146,69 @@
     
 </div>
 <!-- Kayıtları görüntülemek için tablo sonu-->
+
+
+
+<!-- Kullanıcı Kayıtları görüntülemek için tablo başlangıcı-->
+<div class="my-5 d-flex justify-content-evenly ">
+  <div class="rounded rounded-3 col-8  ">
+      <p class="display-6 text-center">Mevcut Kullanıcılar</p>
+      <hr class="border border-1 border-dark">
+
+      <div class="col-12 d-flex ">
+        <div class="col-6">
+          <input class=" my-3 form-control" type="text" id="kullaniciAra" onkeyup="kullaniciArama()" placeholder="Kullanıcı Ara">
+        </div>
+       
+      </div>
+
+      <div style="height: 300px" class="table-responsive-md overflow-scroll rounded rounded-3">
+          <table id="epostaTablosu" class="table-bordered table table-light table-striped table-hover" >
+              <thead class=" table-dark">
+              <tr>
+                <th class="text-start ">ID</th>
+                  <th class="text-start ">Adı</th>
+                  <th class="text-center ">E-Posta</th>
+                  <th class="text-center ">Admin Mi?</th>
+                  <th class="text-center ">Kullanıcı Sil</th>
+              </tr>
+              </thead>
+              <tbody>
+                @if(isset($kullanicis)) 
+                @foreach ($kullanicis as $don)
+              <tr>
+                <td class="text-start pt-4">{{$don['id']}}</td>
+                 <td class="text-start pt-4">{{$don['name']}}</td>
+                 <td class="text-center pt-4">{{$don['email']}}</td>
+                 <td class="text-center pt-4">{{$don['is_admin']}}</td>
+                 <td class="text-center pt-3" class="ps-3 text-center" >
+                    <a class="btn btn-dark " 
+                    style="text-decoration: none; color: rgb(255, 255, 255);" 
+                    href={{url('kullanicisil').'/'.$don->id }}>Kullanıcıyı Sil</a>
+                </td>
+              </tr>
+              
+              @endforeach
+              @endif
+              </tbody>
+          </table>
+      </div>
+  </div>
+  
+</div>
+<!-- Kullanıcı Kayıtları görüntülemek için tablo sonu-->
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!--Ürün Eklemek İçin Modal Başlangıcı-->
 
@@ -207,7 +276,7 @@
       table = document.getElementById("urunTablosu");
       tr = table.getElementsByTagName("tr");
       for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
+        td = tr[i].getElementsByTagName("td")[2];
         if (td) {
           txtValue = td.textContent || td.innerText;
           if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -222,6 +291,28 @@
 </script>
 <!--Ürün aramak için fonksiyon sonu-->
 
+<!--Kullanıcı aramak için fonksiyon başlangıcı-->
+<script>
+  function kullaniciArama() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("kullaniciAra");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("epostaTablosu");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
 
+</script>
+<!--Kullanıcı aramak için fonksiyon sonu-->
 </body>
 </html>

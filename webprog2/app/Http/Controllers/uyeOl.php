@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\kaydolModel;
 use App\Models\urunEklemeModel;
 use App\Models\urunlerigoster;
+use App\Models\User;
 
 class uyeOl extends Controller
 {
@@ -36,6 +37,13 @@ class uyeOl extends Controller
     function urunusil($urunid)
     {
         $veri=urunlerigoster::find($urunid);
+        $veri->delete();
+        return redirect()->back();
+    }
+
+    function kullanicisil($id)
+    {
+        $veri=User::find($id);
         $veri->delete();
         return redirect()->back();
     }

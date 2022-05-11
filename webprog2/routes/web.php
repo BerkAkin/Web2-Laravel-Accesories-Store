@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\uyeOl;
 use App\Http\Controllers\Urunlerilistele;
+use App\Http\Controllers\Sepet;
+use App\Http\Controllers\SiparisVer;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,9 +20,7 @@ use App\Http\Controllers\Urunlerilistele;
 Route::get('/', function () {
     return view('anasayfa');
 });
-
 Route::get('/',[Urunlerilistele::class,'goster']);
-
 
 Auth::routes();
 
@@ -30,6 +30,14 @@ Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home
 Route::post('urunukaydet',[uyeOl::class,'urunKaydet']);
 Route::get('sil/{urunid}',[uyeOl::class,'urunusil']);
 
+Route::post('sepete-ekle',[Sepet::class,'ekle'])->name('sepete-ekle');;
+Route::get('sepettensil/{id}', [Sepet::class,'kaldir'])->name('sepetten-kaldir');
+
+Route::get('kullanicisil/{id}', [uyeOl::class,'kullanicisil'])->name('kullanici-kaldir');
 
 
+Route::get('sepet', function () {
+    return view('sepet');
+});
 
+Route::post('siparisiver',[SiparisVer::class,'siparisi_tamamla']);

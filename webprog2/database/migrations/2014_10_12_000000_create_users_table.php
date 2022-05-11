@@ -13,6 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        /*Kullanıcılar tablosu*/
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -33,6 +34,8 @@ class CreateUsersTable extends Migration
             $table->string('urunfiyat');
 
         });
+
+        
     }
 
     /**

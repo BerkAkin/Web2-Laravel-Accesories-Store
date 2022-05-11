@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\urunlerigoster;
+use App\Models\User;
 class HomeController extends Controller
 {
     /**
@@ -31,7 +32,9 @@ class HomeController extends Controller
     public function adminHome()
     {
         $veriler= urunlerigoster::all();
-        return view('adminHome')->with('uruns', $veriler);
+        $kullanicilar= User::all();
+        return view('adminHome', ['uruns'=>$veriler,'kullanicis'=>$kullanicilar]);
+        //return view('adminHome')->with('uruns', $veriler);
     }
     
 }
