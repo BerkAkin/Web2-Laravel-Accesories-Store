@@ -9,4 +9,5 @@ class Siparisler extends Model
 {
     use HasFactory;
     protected $table ='siparisler';
+    public $timestamps = false;
 }

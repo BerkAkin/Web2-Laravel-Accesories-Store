@@ -150,7 +150,7 @@
 
 
 <!-- Kullanıcı Kayıtları görüntülemek için tablo başlangıcı-->
-<div class="my-5 d-flex justify-content-evenly ">
+<div class="mt-5 d-flex justify-content-evenly ">
   <div class="rounded rounded-3 col-8  ">
       <p class="display-6 text-center">Mevcut Kullanıcılar</p>
       <hr class="border border-1 border-dark">
@@ -201,6 +201,52 @@
 
 
 
+<!-- Sipariş Onaylamak - Görüntülemek için tablo başlangıcı-->
+<div class="my-5 d-flex justify-content-evenly ">
+  <div class="rounded rounded-3 col-10  ">
+      <p class="display-6 text-center">Siparişler</p>
+      <hr class="border border-1 border-dark">
+      <div style="height: 300px" class="table-responsive-md overflow-scroll rounded rounded-3">
+          <table id="epostaTablosu" class="table-bordered table table-light table-striped table-hover" >
+              <thead class=" table-dark">
+              <tr>
+                <th class="text-start ">ID</th>
+                  <th class="text-start ">Ad Soyad</th>
+                  <th class="text-center ">Tel No</th>
+                  <th class="text-center ">Ürünler</th>
+                  <th class="text-center ">Gönderim Adresi</th>
+                  <th class="text-center ">E-mail</th>
+                  <th class="text-center ">Sipariş Onay Durumu</th>
+                  <th class="text-center ">Sipariş Onay Ret</th>
+              </tr>
+              </thead>
+              <tbody>
+                @if(isset($siparises)) 
+                @foreach ($siparises as $don)
+              <tr>
+                <td class="text-start pt-4">{{$don['id']}}</td>
+                 <td class="text-start pt-4">{{$don['siparisAdSoyad']}}</td>
+                 <td class="text-center pt-4">{{$don['siparisTelNo']}}</td>
+                 <td class="text-center pt-4">{{$don['siparisurnuleri']}}</td>
+                 <td class="text-center pt-4">{{$don['siparisadresi']}}</td>
+                 <td class="text-center pt-4">{{$don['siparisEmail']}}</td>
+                 <td class="text-center pt-4">{{$don['siparisOnay']}}</td>
+                 <td class="text-center pt-3" class="ps-3 text-center" >
+                  <a class="btn btn-success " 
+                  style="text-decoration: none; color: rgb(255, 255, 255);" 
+                  href={{url('siparisonayla').'/'.$don->id }}>Siparişi Onayla</a>
+              </td>
+              </tr>
+              
+              @endforeach
+              @endif
+              </tbody>
+          </table>
+      </div>
+  </div>
+  
+</div>
+<!-- Sipariş Onaylamak - Görüntülemek için tablo sonu-->
 
 
 

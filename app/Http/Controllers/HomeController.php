@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\urunlerigoster;
 use App\Models\User;
+use App\Models\Siparisler;
 class HomeController extends Controller
 {
     /**
@@ -33,7 +34,8 @@ class HomeController extends Controller
     {
         $veriler= urunlerigoster::all();
         $kullanicilar= User::all();
-        return view('adminHome', ['uruns'=>$veriler,'kullanicis'=>$kullanicilar]);
+        $siparisler= Siparisler::all();
+        return view('adminHome', ['uruns'=>$veriler,'kullanicis'=>$kullanicilar,'siparises'=>$siparisler]);
         //return view('adminHome')->with('uruns', $veriler);
     }
     

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\kaydolModel;
 use App\Models\urunEklemeModel;
 use App\Models\urunlerigoster;
+use App\Models\Siparisler;
 use App\Models\User;
 
 class uyeOl extends Controller
@@ -48,4 +49,11 @@ class uyeOl extends Controller
         return redirect()->back();
     }
 
+    function siparisOnayla(Request $istek, $id)
+    {
+        $veri=Siparisler::find($id);
+        $veri->siparisOnay='Onaylandı';
+        $veri->update();
+        return redirect()->back();
+    }
 }

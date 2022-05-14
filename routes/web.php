@@ -35,9 +35,10 @@ Route::get('sepettensil/{id}', [Sepet::class,'kaldir'])->name('sepetten-kaldir')
 
 Route::get('kullanicisil/{id}', [uyeOl::class,'kullanicisil'])->name('kullanici-kaldir');
 
+Route::get('siparisonayla/{id}', [uyeOl::class,'siparisOnayla'])->name('siparis-onayla');
 
 Route::get('sepet', function () {
     return view('sepet');
 });
 
-Route::post('siparisiver',[SiparisVer::class,'siparisi_tamamla']);
+Route::get('siparisiver',[SiparisVer::class,'siparisi_tamamla']);

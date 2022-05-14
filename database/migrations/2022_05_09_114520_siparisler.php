@@ -16,9 +16,12 @@ class Siparisler extends Migration
       /* Siparişler Tablosu */
       Schema::create('siparisler', function (Blueprint $table) {
         $table->id('id');
+        $table->string('siparisAdSoyad',100);
         $table->string('siparisurnuleri', 3000);
         $table->string('siparisadresi',1000);
-        $table->string('toplamfiyat');
+        $table->string('siparisTelNo',12);
+        $table->string('siparisEmail',100);
+        $table->string('siparisOnay',30)->default('Onay Bekliyor');
     });
     }
 

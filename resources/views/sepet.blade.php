@@ -1,3 +1,4 @@
+@include('sweetalert::alert')
 <!DOCTYPE html>
 <html lang="tr">
     <head>
@@ -113,7 +114,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form method="POST">
+        <form method="get" action="{{ url("/siparisiver") }}">
           @csrf
           <div class="my-2 text-success container d-flex justify-content-center text-center">
             <div class="col-12">
@@ -128,19 +129,22 @@
               <div class=""><input class="form-control" name="siparisTelNo"required></div>
               <label class="mt-3" for="siparisposta">E-posta</label>
               <div class=""><input class="form-control" type="email" name="siparisposta"required></div>
-              <label class="mt-3" for="urunEkleFiyat">Adres Bilgisi</label>
+              <label class="mt-3" for="siparisAdres">Adres Bilgisi</label>
               <div class=""><textarea cols="10" rows="5"  style="resize:none" class="form-control" name="siparisAdres" type="text"></textarea></div>
             </div>
           </div>
           <div class="modal-footer mt-4">
             <button type="button" class="btn btn-outline-danger"  data-bs-dismiss="modal">İptal</button>
+           
+              @foreach (Cart::content() as $sepet )
+              <input hidden name="sepeticerigi[]" value="{{ $sepet->name }}">
+              @endforeach
+
             <button type="submit" class="btn btn-outline-success">Siparişi Tamamla</button>
+            
           </div>
         </form>
       </div>
-
-
-      <!-- Modal footer -->
       
 
     </div>

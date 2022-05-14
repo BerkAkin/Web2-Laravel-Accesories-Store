@@ -121,7 +121,7 @@
         </div>
         </div>
     <!-- Navbar Sonu -->
-    
+    <div class="text-light rounded rounded-5 mt-4 container col-7 text-center bg-danger fw-bolder text-capitalize">! Şuanda mevcut ödeme yöntemi olarak yalnızca kapıda ödeme seçeneği aktiftir !</div>
     
     
     
